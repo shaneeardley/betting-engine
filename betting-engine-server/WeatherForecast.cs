@@ -1,6 +1,6 @@
 using System;
 
-namespace betting_engine_server
+namespace betting.engine.server
 {
     public class WeatherForecast
     {

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <RootNamespace>betting_engine_server</RootNamespace>
+        <RootNamespace>betting.engine.server</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

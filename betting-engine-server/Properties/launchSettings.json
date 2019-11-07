@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "betting_engine_server": {
+    "betting.engine.server": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
