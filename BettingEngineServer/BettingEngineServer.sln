@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingEngineServer", "BettingEngineServer\BettingEngineServer.csproj", "{36517223-C9DA-4BA8-86D9-5699B95798C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingEngineServerTests", "BettingEngineServerTests\BettingEngineServerTests.csproj", "{9E9C0812-3104-4108-876B-C73E78E838CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36517223-C9DA-4BA8-86D9-5699B95798C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36517223-C9DA-4BA8-86D9-5699B95798C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36517223-C9DA-4BA8-86D9-5699B95798C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36517223-C9DA-4BA8-86D9-5699B95798C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9C0812-3104-4108-876B-C73E78E838CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9C0812-3104-4108-876B-C73E78E838CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9C0812-3104-4108-876B-C73E78E838CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9C0812-3104-4108-876B-C73E78E838CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
