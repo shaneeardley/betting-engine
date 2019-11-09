@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BettingEngineServer.Classes;
+using BettingEngineServer.Interfaces;
+using BettingEngineServer.Repositories;
+using BettingEngineServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +29,13 @@ namespace BettingEngineServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IMarketService, MarketService>();
+            services.AddScoped<IBetService, BetService>();
+
+            services.AddScoped<ICrudRepository<Event>, EventRepository>();
+            services.AddScoped<ICrudRepository<Market>, MarketRepository>();
+            services.AddScoped<ICrudRepository<Bet>, BetRepository>();
             services.AddControllers();
         }
 
