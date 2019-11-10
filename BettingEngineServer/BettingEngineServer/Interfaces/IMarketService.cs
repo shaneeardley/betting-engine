@@ -12,5 +12,7 @@ namespace BettingEngineServer.Interfaces
         Market UpdateMarket(Market existingMarket);
         Market CreateMarket(Market newMarket);
         void DeleteMarket(string marketId);
+        Market UpdateMarketProbability(string marketId, in decimal newProbability);
+        MarketOutcome GetMarketCurrentOutcome(string id);
     }
 }

@@ -21,6 +21,7 @@ namespace BettingEngineServer.Repositories
 
         public Bet GetById(string id)
         {
+            if (string.IsNullOrEmpty(id)) return null;
             return CachedBets.TryGetValue(id, out var bet) ? bet : null;
         }
 

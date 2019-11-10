@@ -22,6 +22,7 @@ namespace BettingEngineServer.Repositories
 
         public Market GetById(string id)
         {
+            if (string.IsNullOrEmpty(id)) return null;
             return CachedMarkets.TryGetValue(id, out var market) ? market : null;
         }
 

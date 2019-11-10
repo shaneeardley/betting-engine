@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BettingEngineServer.Classes;
+using BettingEngineServer.Interfaces;
 using BettingEngineServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,13 +12,13 @@ namespace BettingEngineServer.Controllers
     public class BetController : ControllerBase
     {
         
-        public BetService BetService { get; set; }
+        public IBetService BetService { get; set; }
 
         private readonly ILogger<BetController> _logger;
         
-        public BetController( BetService betService)
+        public BetController( IBetService betService)
         {
-            this.BetService = betService;
+            BetService = betService;
         }
             
         [HttpGet("{id}")]
