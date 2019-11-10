@@ -1,0 +1,61 @@
+
+
+<h4 class="card-title">Event P&L Possibilities</h4>
+<div class="card">
+  <div class="card-body" *ngIf="selectedEvent">
+    <h4 class="card-title">Event Details</h4>
+    <hr>
+    <h5>Event Id</h5>
+    <input readonly type="text" class="form-control"
+           [(ngModel)]="selectedEvent.id">
+    <h5>Event Description</h5>
+    <input readonly type="text" class="form-control" placeholder="Event Description"
+           [(ngModel)]="selectedEvent.eventDescription">
+    <h5>Event Start Date</h5>
+    <h6>{{selectedEvent.startDate}}</h6>
+
+    <h5>Event End Date</h5>
+    <h6>{{selectedEvent.endDate}}</h6>
+
+    <hr>
+    <button type="button" class="btn btn-secondary" (click)="back()">Back</button>
+     
+  </div>
+
+</div>
+
+<div class="card">
+  <div class="card-body" >
+    <h4 class="card-title">Profit And Loss Outcomes</h4>
+    <p>Negative numbers displayed next to total amounts lost</p>
+    <hr>
+    <div class="row">
+    <h5 class="col-md-3">Total Placed Bet Value</h5>
+    <h5 class="col-md-3">{{getTotalPlacedBetValue()}}</h5>
+    </div>
+    <hr>
+
+    <table class="table" >
+      <thead>
+      <tr>
+        <th scope="col">Market Description</th>
+        <th scope="col">Probability</th>
+        <th scope="col">Odds</th>
+        <th scope="col">Bet Value Placed</th>
+        <th scope="col">Net on Success</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let outCome of eventOutcomesList">
+        <th>{{outCome.winningMarket.marketDescription}}</th>
+        <th>{{outCome.winningMarket.marketProbability}}</th>
+        <th>{{getMarketOdds(outCome.winningMarket)}}</th>
+        <th>{{getMarketBetsTotal(outCome)}}</th>
+        <th>{{outCome.plAmount}}</th>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

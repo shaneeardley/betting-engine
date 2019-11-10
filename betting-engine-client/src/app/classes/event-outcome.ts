@@ -1,12 +1,14 @@
 import {MarketOutcome} from './market-outcome';
+import {Market} from './market';
 
 export class EventOutcome {
   constructor() {
-    this.PossibleMarketOutcomes = [];
+    this.possibleMarketOutcomes = [];
   }
 
-  EventId: string;
-  WinningMarketId: string;
-  PLAmount: number;
-  PossibleMarketOutcomes: MarketOutcome[];
+  eventId: string;
+  winningMarketId: string;
+  winningMarket: Market;
+  plAmount: number;
+  possibleMarketOutcomes: MarketOutcome[];
 }

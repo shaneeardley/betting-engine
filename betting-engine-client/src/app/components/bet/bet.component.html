@@ -1,1 +1,18 @@
-<p>bet works!</p>
+<div class="card">
+  <div class="card-body" *ngIf="selectedBet">
+    <h5 class="card-title">{{getHeaderText()}}</h5>
+    <div *ngIf="!isNewBet">
+      <h6>Bet Id</h6>
+      <input readonly type="text" class="form-control"
+             [(ngModel)]="selectedBet.id">
+    </div>
+    <h6>Bet Amount</h6>
+    <input *ngIf="isNewBet" type="number" class="form-control"
+           [(ngModel)]="selectedBet.betAmount">
+    <h6 *ngIf="!isNewBet">{{selectedBet.betAmount}}</h6>
+    <hr>
+    <button  type="button" class="btn btn-secondary" (click)="back()">Back</button> 
+    <button *ngIf="isNewBet" [disabled]="someFieldsMissing()" type="button" class="btn btn-primary" (click)="saveBet()">Save Bet</button> 
+
+  </div>
+</div>

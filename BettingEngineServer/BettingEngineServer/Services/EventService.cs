@@ -54,6 +54,8 @@ namespace BettingEngineServer.Services
                 throw new ValidationException("An event needs an end date.");
             if(newEvent.EndDate < DateTime.Now)
                 throw new ValidationException("An event cannot be created once the event end date has passed.");
+            if (newEvent.StartDate > newEvent.EndDate)
+                throw new ValidationException("An event cannot end before it starts");
             
             if(string.IsNullOrEmpty(newEvent.EventDescription))
                 throw new ValidationException("An event requires a description in order to be created.");
@@ -74,6 +76,7 @@ namespace BettingEngineServer.Services
             if(eventById.EventMarkets==null|| eventById.EventMarkets.Count==0 || eventById.EventMarkets.FirstOrDefault(m=>m.Id==marketId)==null)
                 return eventOutcome;
             eventOutcome.WinningMarketId = marketId;
+            eventOutcome.WinningMarket = eventById.EventMarkets.FirstOrDefault(m => m.Id == marketId);
         
             eventById.EventMarkets.ForEach(market =>
             {

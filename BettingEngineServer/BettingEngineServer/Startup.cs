@@ -33,9 +33,9 @@ namespace BettingEngineServer
             services.AddScoped<IMarketService, MarketService>();
             services.AddScoped<IBetService, BetService>();
 
-            services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IMarketRepository, MarketRepository>();
-            services.AddScoped<IBetRepository, BetRepository>();
+            services.AddSingleton<IEventRepository, EventRepository>();
+            services.AddSingleton<IMarketRepository, MarketRepository>();
+            services.AddSingleton<IBetRepository, BetRepository>();
             
             services.AddCors(o => o.AddPolicy("AllCors", builder =>
             {

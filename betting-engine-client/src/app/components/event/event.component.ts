@@ -33,11 +33,11 @@ export class EventComponent implements OnInit {
   }
 
   addNewMarket() {
-
+    this.router.navigate(['event', this.selectedEvent.id, 'market','create']);
   }
 
   viewMarket(market: Market) {
-
+    this.router.navigate(['event', this.selectedEvent.id, 'market', market.id]);
   }
 
   someFieldsMissing() {
@@ -51,11 +51,33 @@ export class EventComponent implements OnInit {
     return 'Event Details';
   }
 
+  back() {
+    this.router.navigate(['events']);
+  }
+
   saveEvent() {
-    this.engineService.createEvent(this.selectedEvent).subscribe(res => {
-      debugger
-      this.isNewEvent = false;
-      this.selectedEvent = res;
-    });
+    if (this.isNewEvent) {
+      this.engineService.createEvent(this.selectedEvent).subscribe(res => {
+        this.isNewEvent = false;
+        this.eventId = res.id;
+        this.selectedEvent = res;
+      });
+    } else {
+      this.engineService.updateEvent(this.selectedEvent).subscribe(res => {
+        this.selectedEvent = res;
+      });
+    }
+  }
+
+  getMarketOdds(market: Market) {
+    let marketOdds = 0;
+    if (Market && market.marketProbability) {
+      marketOdds = 1 / market.marketProbability;
+    }
+    return marketOdds;
+  }
+
+  viewAllMarketOutcomes() {
+    this.router.navigate(['event','profit-loss-report',this.selectedEvent.id])
   }
 }

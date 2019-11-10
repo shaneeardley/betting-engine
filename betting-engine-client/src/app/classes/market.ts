@@ -2,19 +2,19 @@ import {Bet} from './bet';
 
 export class Market {
   constructor() {
-    this.MarketBets = [];
+    this.marketBets = [];
   }
 
-  Id: string;
-  MarketProbability: number;
-  MarketDescription: string;
-  EventId: string;
-  MarketBets: Bet[];
+  id: string;
+  marketProbability: number;
+  marketDescription: string;
+  eventId: string;
+  marketBets: Bet[];
 
-  getMarketOdds() {
-    if (this.MarketProbability === 0) {
+  public getMarketOdds() {
+    if (this.marketProbability === 0) {
       return 0;
     }
-    return 1 / this.MarketProbability;
+    return 1 / this.marketProbability;
   }
 }

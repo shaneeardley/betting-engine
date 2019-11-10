@@ -1,6 +1,6 @@
 export class Bet {
 
-  Id: string;
-  MarketId: string;
-  BetAmount: number;
+  id: string;
+  marketId: string;
+  betAmount: number;
 }

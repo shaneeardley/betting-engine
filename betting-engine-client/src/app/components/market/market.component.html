@@ -1,2 +1,53 @@
-<p>market works!</p>
-list of bets here
+<div class="card">
+  <div class="card-body" *ngIf="selectedMarket">
+    <h5 class="card-title">{{getHeaderText()}}</h5>
+    <div *ngIf="!isNewMarket">
+      <h6>Market Id</h6>
+      <input readonly type="text" class="form-control"
+             [(ngModel)]="selectedMarket.id">
+    </div>
+    <h6>Market Description</h6>
+    <input type="text" class="form-control" placeholder="Market Description"
+           [(ngModel)]="selectedMarket.marketDescription">
+    <h6>Market Probability</h6>
+    <input (keyup)="validatePress()" max="1" min="0" type="number" class="form-control" placeholder="Market Probability"
+           [(ngModel)]="selectedMarket.marketProbability">
+    <h6 >{{getMarketOddsLabel()}}</h6>
+    <hr>
+    <button  type="button" class="btn btn-secondary" (click)="back()">Back</button> 
+    <button [disabled]="someFieldsMissing()" type="button" class="btn btn-primary" (click)="saveMarket()">Save Market
+    </button>
+
+  </div>
+</div>
+
+
+<div class="card" *ngIf="!isNewMarket">
+  <div class="card-body">
+    <h5 class="card-title">Bets List</h5>
+
+    <table class="table" *ngIf="selectedMarket">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Bet Amount</th>
+        <th scope="col">
+          <button type="button" class="btn btn-primary" (click)="addNewBet()">New</button>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let bet of selectedMarket.marketBets">
+        <th>{{bet.id}}</th>
+        <th>{{bet.betAmount}}</th>
+        <td>
+          <button type="button" class="btn btn-success" (click)="viewBet(bet)">View Details</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+

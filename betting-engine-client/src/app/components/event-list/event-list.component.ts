@@ -32,7 +32,7 @@ export class EventListComponent implements OnInit {
   }
 
   deleteEvent(event: EngineEvent) {
-    this.engineService.DeleteEvent(event.Id).subscribe(() => {
+    this.engineService.DeleteEvent(event.id).subscribe(() => {
       this.engineService.getAllEvents().subscribe((res: EngineEvent[]) => {
         this.eventsList = res;
       });
@@ -40,6 +40,6 @@ export class EventListComponent implements OnInit {
   }
 
   viewEvent(event: EngineEvent) {
-    this.router.navigate(['event', event.Id]);
+    this.router.navigate(['event', event.id]);
   }
 }

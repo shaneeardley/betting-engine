@@ -12,6 +12,7 @@ import {EngineService} from './engine.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {FormsModule} from '@angular/forms';
+import { EventProfitLossReportComponent } from './components/event-profit-loss-report/event-profit-loss-report.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {FormsModule} from '@angular/forms';
     EventListComponent,
     EventComponent,
     MarketComponent,
-    BetComponent
+    BetComponent,
+    EventProfitLossReportComponent
   ],
   imports: [
     BrowserModule,
