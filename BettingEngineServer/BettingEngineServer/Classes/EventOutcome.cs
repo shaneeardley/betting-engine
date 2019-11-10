@@ -11,6 +11,8 @@ namespace BettingEngineServer.Classes
         }
         public string EventId { get; set; }
         public string WinningMarketId { get; set; }
+
+        public Market WinningMarket { get; set; }
         //Negative amounts mean loss
         public decimal PLAmount { get; set; }
         public List<MarketOutcome> PossibleMarketOutcomes { get; set; }
