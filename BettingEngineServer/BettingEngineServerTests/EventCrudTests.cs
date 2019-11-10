@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using BettingEngineServer.Classes;
 using BettingEngineServer.Controllers;
 using BettingEngineServer.Interfaces;
@@ -16,18 +17,66 @@ namespace BettingEngineServerTests
         {
             this.EventController = new EventController(new EventService(new EventRepository(),new MarketService(new MarketRepository(), new  BetService(new BetRepository()))));
         }
+
+        
         
         [Fact]
-        public void CanCreateEvent()
+        public void CanCreateValidEvent()
         {
-            var newEvent = EventController.Post(new Event());
+            var newEvent = EventController.Post(Common.GetValidEvent());
             Assert.NotNull(newEvent.Id);
         }
+
+        [Fact]
+        public void CantCreateEventWithNoStartDate()
+        {
+            var newEvent = new Event()
+            {
+                EndDate = DateTime.Now.AddDays(1),
+                EventDescription = "New Event Name"
+            };
+            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+        }
+
+        [Fact]
+        public void CantCreateEventWithNoEndDate()
+        {
+            var newEvent = new Event()
+            {
+                StartDate = DateTime.Now.AddDays(1),
+                EventDescription = "New Event Name"
+            };
+            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+        }
+        
+        [Fact]
+        public void CantCreateEventWithInvalidEndDate()
+        {
+            var newEvent = new Event()
+            {
+                EndDate = DateTime.Now.AddDays(-1),
+                StartDate = DateTime.Now,
+                EventDescription = "New Event Name"
+            };
+            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+        }
+        
+        [Fact]
+        public void CantCreateEventWithNoDescription()
+        {
+            var newEvent = new Event()
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(1)
+            };
+            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+        }
+        
         
         [Fact]
         public void CanDeleteEvent()
         {
-            var newEvent = EventController.Post(new Event());
+            var newEvent = EventController.Post(Common.GetValidEvent());
             EventController.Delete(newEvent.Id);
             Assert.Empty(EventController.Get());
         }
@@ -35,9 +84,9 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanGetAllEvents()
         {
-            EventController.Post(new Event());
-            EventController.Post(new Event());
-            EventController.Post(new Event());
+            EventController.Post(Common.GetValidEvent());
+            EventController.Post(Common.GetValidEvent());
+            EventController.Post(Common.GetValidEvent());
 
             Assert.Equal(3, EventController.Get().Count);
         }
@@ -45,7 +94,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanGetSpecificEvent()
         {
-            var newEvent = EventController.Post(new Event(){EventDescription = "New Event Description"});
+            var newEvent = EventController.Post(Common.GetValidEvent());
 
             Assert.Equal(EventController.Get(newEvent.Id).EventDescription, newEvent.EventDescription);
         }
@@ -53,7 +102,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanGetSpecificEventAndChildren()
         {
-            var newEvent = EventController.Post(new Event(){EventDescription = "New Event Description"});
+            var newEvent = EventController.Post(Common.GetValidEvent());
                 
             Assert.Equal(EventController.GetWithAllChildren(newEvent.Id).EventDescription, newEvent.EventDescription);
         }
@@ -61,7 +110,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CantGetMissingEvent()
         {
-            EventController.Post(new Event());
+            EventController.Post(Common.GetValidEvent());
             Assert.Null(EventController.Get(Guid.NewGuid().ToString()));
 
         }
@@ -69,7 +118,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanUpdateExistingEvent()
         {
-            var createdEvent = EventController.Post(new Event(){EventDescription = "New Event Desc"});
+            var createdEvent = EventController.Post(Common.GetValidEvent());
 
             createdEvent.EventDescription = "Updated Event Description";
             EventController.Put(createdEvent);
@@ -97,14 +146,14 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanCreateEvent()
         {
-            var newEvent = EventService.CreateEvent(new Event());
+            var newEvent = EventService.CreateEvent(Common.GetValidEvent());
             Assert.NotNull(newEvent.Id);
         }
         
         [Fact]
         public void CanDeleteEvent()
         {
-            var newEvent = EventService.CreateEvent(new Event());
+            var newEvent = EventService.CreateEvent(Common.GetValidEvent());
             EventService.DeleteEvent(newEvent.Id);
             Assert.Empty(EventService.GetAll());
         }
@@ -112,9 +161,9 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanGetAllEvents()
         {
-            EventService.CreateEvent(new Event());
-            EventService.CreateEvent(new Event());
-            EventService.CreateEvent(new Event());
+            EventService.CreateEvent(Common.GetValidEvent());
+            EventService.CreateEvent(Common.GetValidEvent());
+            EventService.CreateEvent(Common.GetValidEvent());
 
             Assert.Equal(3, EventService.GetAll().Count);
         }
@@ -122,7 +171,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanGetSpecificEvent()
         {
-            var newEvent = EventService.CreateEvent(new Event(){EventDescription = "New Event Description"});
+            var newEvent = EventService.CreateEvent(Common.GetValidEvent());
 
             Assert.Equal(EventService.GetById(newEvent.Id,false,false).EventDescription, newEvent.EventDescription);
         }
@@ -130,7 +179,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CantGetMissingEvent()
         {
-            EventService.CreateEvent(new Event());
+            EventService.CreateEvent(Common.GetValidEvent());
             Assert.Null(EventService.GetById(Guid.NewGuid().ToString(),false,false));
 
         }
@@ -138,7 +187,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanUpdateExistingEvent()
         {
-            var createdEvent = EventService.CreateEvent(new Event(){EventDescription = "New Event Desc"});
+            var createdEvent = EventService.CreateEvent(Common.GetValidEvent());
 
             createdEvent.EventDescription = "Updated Event Description";
             EventService.UpdateEvent(createdEvent);
@@ -171,7 +220,7 @@ namespace BettingEngineServerTests
         [Fact]
         public void CanDeleteEvent()
         {
-            var newEvent = EventsRepo.Create(new Event());
+            var newEvent = EventsRepo.Create(Common.GetValidEvent());
             EventsRepo.Delete(newEvent.Id);
             Assert.Empty(EventsRepo.GetAll());
         }

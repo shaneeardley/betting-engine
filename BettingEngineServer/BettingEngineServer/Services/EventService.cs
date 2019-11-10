@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BettingEngineServer.Classes;
 using BettingEngineServer.Interfaces;
@@ -39,7 +40,24 @@ namespace BettingEngineServer.Services
 
         public Event CreateEvent(Event newEvent)
         {
+            ValidateNewEvent(newEvent);
+            
             return EventRepository.Create(newEvent);
+        }
+
+        private void ValidateNewEvent(Event newEvent)
+        {
+            if (newEvent == null) throw new ArgumentNullException(nameof(newEvent));
+            if (newEvent.StartDate == null || newEvent.StartDate == new DateTime())
+                throw new ValidationException("An event needs a starting date.");
+            if (newEvent.EndDate == null || newEvent.EndDate == new DateTime())
+                throw new ValidationException("An event needs an end date.");
+            if(newEvent.EndDate < DateTime.Now)
+                throw new ValidationException("An event cannot be created once the event end date has passed.");
+            
+            if(string.IsNullOrEmpty(newEvent.EventDescription))
+                throw new ValidationException("An event requires a description in order to be created.");
+
         }
 
         public void DeleteEvent(string eventId)

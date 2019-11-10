@@ -99,9 +99,9 @@ namespace BettingEngineServerTests
             var persistedEvent = EventController.GetWithAllChildren(newEvent.Id);
 
             //Bets total 6 per market
-            EventOutcome outcome1 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket1.Id); // Payout 7.5
-            EventOutcome outcome2 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket2.Id); // Payout 10
-            EventOutcome outcome3 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket3.Id); // Payout 60
+            var outcome1 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket1.Id); // Payout 7.5
+            var outcome2 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket2.Id); // Payout 10
+            var outcome3 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket3.Id); // Payout 60
 
             var success = outcome1.PLAmount == 10.5m && outcome2.PLAmount == 8m && outcome3.PLAmount == -42;
 

@@ -8,12 +8,7 @@ namespace BettingEngineServerTests
     {
         public static Event CreateAndSaveMockEvent(EventController eventController)
         {
-            var newEvent = new Event()
-            {
-                StartDate = new DateTime(2019, 11, 2, 11, 0, 0),
-                EndDate = new DateTime(2019, 11, 2, 12, 30, 0),
-                EventDescription = "RWC: South Africa VS England"
-            };
+            var newEvent = GetValidEvent();
             return eventController.Post(newEvent);
         }
 
@@ -39,6 +34,16 @@ namespace BettingEngineServerTests
             };
             
             return betController.Post(newBet);
+        }
+        
+        public static Event GetValidEvent()
+        {
+            return new Event()
+            {
+                EndDate = DateTime.Now.AddDays(1),
+                StartDate = DateTime.Now,
+                EventDescription = "New Event Name"
+            };
         }
     }
 }

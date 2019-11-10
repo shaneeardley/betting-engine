@@ -19,8 +19,8 @@ namespace BettingEngineServerTests
         
           
         [Fact]
-        public void CanPostBet()
-        {
+        public void CanPostValidBet()
+        {   
             var newBet = BetController.Post(new Bet());
             Assert.NotNull(newBet.Id);
         }
