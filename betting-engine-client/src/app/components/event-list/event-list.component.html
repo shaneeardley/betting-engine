@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Events List</h5>
+
+    <table class="table" *ngIf="eventsList">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Event Description</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">
+          <button type="button" class="btn btn-primary" (click)="addNewEvent()">New</button>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let event of eventsList">
+        <th>{{event.id}}</th>
+        <th>{{event.eventDescription}}</th>
+        <td>{{event.startDate}}</td>
+        <td>{{event.endDate}}</td>
+        <td>
+          <button type="button" class="btn btn-success" (click)="viewEvent(event)">View Details</button>
+          <button type="button" class="btn btn-danger" (click)="deleteEvent(event)" *ngIf="canDelete(event)">Danger
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{getHeaderText()}}</h5>
+
+    <div class="input-group" *ngIf="!isNewEvent">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Event Id</span>
+      </div>
+      <input readonly type="text" class="form-control"
+             [(ngModel)]="selectedEvent.id">
+    </div>
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Event Description</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Event Description"
+             [(ngModel)]="selectedEvent.eventDescription">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Event Start Date</span>
+      </div>
+      <input type="date" class="form-control" [(ngModel)]="selectedEvent.startDate">
+    </div>
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Event End Date</span>
+      </div>
+      <input type="date" class="form-control" placeholder="End Date" [(ngModel)]="selectedEvent.endDate">
+
+    </div>
+
+
+
+    <button [disabled]="someFieldsMissing()" type="button" class="btn btn-primary" (click)="saveEvent()">Save Event
+    </button>
+
+  </div>
+</div>
+
+<div class="card" *ngIf="!isNewEvent">
+  <div class="card-body">
+    <h5 class="card-title">Markets List</h5>
+
+    <table class="table" *ngIf="selectedEvent">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">MarketDescription</th>
+        <th scope="col">Market Probability</th>
+        <th scope="col">
+          <button type="button" class="btn btn-primary" (click)="addNewMarket()">New</button>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let market of selectedEvent.eventMarkets">
+        <th>{{market.Id}}</th>
+        <th>{{market.MarketDescription}}</th>
+        <td>{{market.MarketProbability}}</td>
+        <td>
+          <button type="button" class="btn btn-success" (click)="viewMarket(market)">View Details</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+

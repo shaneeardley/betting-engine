@@ -36,12 +36,21 @@ namespace BettingEngineServer
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IMarketRepository, MarketRepository>();
             services.AddScoped<IBetRepository, BetRepository>();
+            
+            services.AddCors(o => o.AddPolicy("AllCors", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+            
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AllCors");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
