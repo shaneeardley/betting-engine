@@ -10,5 +10,6 @@ namespace BettingEngineServer.Interfaces
         Event UpdateEvent(Event existingEvent);
         Event CreateEvent(Event newEvent);
         void DeleteEvent(string eventId);
+        EventOutcome GetEventOutcomeForMarket(string eventId, string marketId);
     }
 }

@@ -55,5 +55,11 @@ namespace BettingEngineServer.Controllers
         {
             EventService.DeleteEvent(id);
         }
+
+        [HttpGet("getEventOutcomeForMarket/{eventId}/{marketId}")]
+        public EventOutcome GetEventOutcomeForMarket(string eventId, string marketId)
+        {
+            return EventService.GetEventOutcomeForMarket(eventId, marketId);
+        }
     }
 } 

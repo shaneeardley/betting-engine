@@ -71,8 +71,8 @@ namespace BettingEngineServer.Services
                 Market = marketById 
             };
             if (marketById.MarketBets == null || marketById.MarketBets.Count == 0) return marketOutcome;
-            marketOutcome.MarketLoseProfitAmount = marketById.MarketBets.Sum(m => m.BetAmount);
-            marketOutcome.MarketWinPayoutAmount = marketOutcome.MarketLoseProfitAmount * marketById.MarketOdds;
+            marketOutcome.MarketLoseProfitAmount = marketById.GetMarketLoseProfitAmount();
+            marketOutcome.MarketWinPayoutAmount = marketById.GetMarketWinPayoutAmount();
 
             return marketOutcome;
         }

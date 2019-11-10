@@ -89,20 +89,23 @@ namespace BettingEngineServerTests
             var nMarket1= Common.CreateAndSaveMockMarket(newEvent.Id, "Team 1 Wins", 0.8m,MarketController);
             var nMarket2=  Common.CreateAndSaveMockMarket(newEvent.Id, "Team 2 Wins", 0.6m,MarketController);
             var nMarket3=Common.CreateAndSaveMockMarket(newEvent.Id, "Draw", 0.1m, MarketController);
-            for (var i = 0; i < 3; i++)
+            for (var i = 1; i < 4; i++)
             {
                 Common.CreateAndSaveMockBet(nMarket1.Id, i,BetController);
-                Common.CreateAndSaveMockBet(nMarket2.Id, i+1,BetController);
-                Common.CreateAndSaveMockBet(nMarket3.Id, i +2,BetController);
+                Common.CreateAndSaveMockBet(nMarket2.Id, i,BetController);
+                Common.CreateAndSaveMockBet(nMarket3.Id, i,BetController);
             }
 
             var persistedEvent = EventController.GetWithAllChildren(newEvent.Id);
 
-            EventOutcome outcome1 = EventController.GetProfitAndLossForMarket(newEvent.Id, nMarket1.Id);
-            EventOutcome outcome2 = EventController.GetProfitAndLossForMarket(newEvent.Id, nMarket2.Id);
-            EventOutcome outcome3 = EventController.GetProfitAndLossForMarket(newEvent.Id, nMarket3.Id);
-            
+            //Bets total 6 per market
+            EventOutcome outcome1 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket1.Id); // Payout 7.5
+            EventOutcome outcome2 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket2.Id); // Payout 10
+            EventOutcome outcome3 = EventController.GetEventOutcomeForMarket(newEvent.Id, nMarket3.Id); // Payout 60
 
+            var success = outcome1.PLAmount == 10.5m && outcome2.PLAmount == 8m && outcome3.PLAmount == -42;
+
+            Assert.True(success);
         }
 
     

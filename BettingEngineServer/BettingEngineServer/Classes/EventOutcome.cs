@@ -4,6 +4,11 @@ namespace BettingEngineServer.Classes
 {
     public class EventOutcome
     {
+
+        public EventOutcome()
+        {
+            PossibleMarketOutcomes = new List<MarketOutcome>();
+        }
         public string EventId { get; set; }
         public string WinningMarketId { get; set; }
         //Negative amounts mean loss

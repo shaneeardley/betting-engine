@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BettingEngineServer.Interfaces;
 
 namespace BettingEngineServer.Classes
@@ -24,6 +25,18 @@ namespace BettingEngineServer.Classes
             }
         }
 
+        public decimal GetMarketLoseProfitAmount()
+        {
+            if (MarketBets==null || MarketBets.Count == 0) return 0;
+            return MarketBets.Sum(b => b.BetAmount);
+        }
+
+        public decimal GetMarketWinPayoutAmount()
+        {
+            var marketMoneyIn = GetMarketLoseProfitAmount();
+            return marketMoneyIn * MarketOdds;
+        }
+        
         
         
     }
