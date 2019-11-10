@@ -23,7 +23,13 @@ namespace BettingEngineServer.Controllers
         [HttpGet("{id}")]
         public Event Get(string id)
         {
-            return EventService.GetById(id);
+            return EventService.GetById(id,true,false);
+        }
+
+        [HttpGet("getWithAllChildren/{id}")]
+        public Event GetWithAllChildren(string id)
+        {
+            return EventService.GetById(id,true,true);
         }
         
         [HttpGet]

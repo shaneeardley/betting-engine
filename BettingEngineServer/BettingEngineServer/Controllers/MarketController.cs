@@ -22,7 +22,7 @@ namespace BettingEngineServer.Controllers
         [HttpGet("{id}")]
         public Market Get(string id)
         {
-            return MarketService.GetById(id);
+            return MarketService.GetById(id, true);
         }
         
         [HttpGet]

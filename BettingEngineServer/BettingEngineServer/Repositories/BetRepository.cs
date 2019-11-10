@@ -6,7 +6,7 @@ using BettingEngineServer.Interfaces;
 
 namespace BettingEngineServer.Repositories
 { 
-    public class BetRepository: ICrudRepository<Bet>  
+    public class BetRepository: IBetRepository  
     {
         public Dictionary<string,Bet>  CachedBets { get; set; }
         public BetRepository()
@@ -45,6 +45,11 @@ namespace BettingEngineServer.Repositories
         public void Delete(string id)
         {
             CachedBets.Remove(id);
+        }
+
+        public List<Bet> GetAllByMarketId(string marketId)
+        {
+            return CachedBets?.Values?.ToList().Where(b => b.MarketId == marketId)?.ToList();
         }
     }
 }

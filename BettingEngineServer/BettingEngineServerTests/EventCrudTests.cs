@@ -14,7 +14,7 @@ namespace BettingEngineServerTests
 
         public EventControllerTests()
         {
-            this.EventController = new EventController(new EventService(new EventRepository()));
+            this.EventController = new EventController(new EventService(new EventRepository(),new MarketService(new MarketRepository(), new  BetService(new BetRepository()))));
         }
         
         [Fact]
@@ -51,6 +51,14 @@ namespace BettingEngineServerTests
         }
 
         [Fact]
+        public void CanGetSpecificEventAndChildren()
+        {
+            var newEvent = EventController.Post(new Event(){EventDescription = "New Event Description"});
+                
+            Assert.Equal(EventController.GetWithAllChildren(newEvent.Id).EventDescription, newEvent.EventDescription);
+        }
+
+        [Fact]
         public void CantGetMissingEvent()
         {
             EventController.Post(new Event());
@@ -83,7 +91,7 @@ namespace BettingEngineServerTests
 
         public EventServiceTests()
         {
-            EventService = new EventService(new EventRepository());
+            EventService = new EventService(new EventRepository(), new MarketService(new MarketRepository(), new BetService(new BetRepository())));
         }
         
         [Fact]
@@ -116,14 +124,14 @@ namespace BettingEngineServerTests
         {
             var newEvent = EventService.CreateEvent(new Event(){EventDescription = "New Event Description"});
 
-            Assert.Equal(EventService.GetById(newEvent.Id).EventDescription, newEvent.EventDescription);
+            Assert.Equal(EventService.GetById(newEvent.Id,false,false).EventDescription, newEvent.EventDescription);
         }
 
         [Fact]
         public void CantGetMissingEvent()
         {
             EventService.CreateEvent(new Event());
-            Assert.Null(EventService.GetById(Guid.NewGuid().ToString()));
+            Assert.Null(EventService.GetById(Guid.NewGuid().ToString(),false,false));
 
         }
 
@@ -135,7 +143,7 @@ namespace BettingEngineServerTests
             createdEvent.EventDescription = "Updated Event Description";
             EventService.UpdateEvent(createdEvent);
 
-            Assert.Equal("Updated Event Description",EventService .GetById(createdEvent.Id).EventDescription);
+            Assert.Equal("Updated Event Description",EventService .GetById(createdEvent.Id,false,false).EventDescription);
         }
 
         [Fact]

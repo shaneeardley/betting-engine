@@ -7,15 +7,20 @@ namespace BettingEngineServer.Services
     public class BetService : IBetService
     {
         
-        private ICrudRepository<Bet> BetRepository { get; set; }
+        private IBetRepository BetRepository { get; set; }
         
-        public BetService(ICrudRepository<Bet> betRepository)
+        public BetService(IBetRepository betRepository)
         {
-            this.BetRepository = betRepository;
+            BetRepository = betRepository;
         }
         public List<Bet> GetAll()
         {
             return BetRepository.GetAll();
+        }
+
+        public List<Bet> GetAllByMarketId(string marketId)
+        {
+            return BetRepository.GetAllByMarketId(marketId);
         }
 
         public Bet GetById(string betId)

@@ -14,7 +14,7 @@ namespace BettingEngineServerTests
 
         public MarketControllerTests()
         {
-            this.MarketController = new MarketController(new MarketService(new MarketRepository()));
+            this.MarketController = new MarketController(new MarketService(new MarketRepository(),new BetService(new BetRepository())));
         }
         
         [Fact]
@@ -82,7 +82,7 @@ namespace BettingEngineServerTests
 
         public MarketServiceTests()
         {
-            MarketService = new MarketService(new MarketRepository());
+            MarketService = new MarketService(new MarketRepository(),new BetService(new BetRepository()));
         }
         
         [Fact]
@@ -115,14 +115,14 @@ namespace BettingEngineServerTests
         {
             var newMarket = MarketService.CreateMarket(new Market(){MarketDescription = "New Market Description"});
 
-            Assert.Equal(MarketService.GetById(newMarket.Id).MarketDescription, newMarket.MarketDescription);
+            Assert.Equal(MarketService.GetById(newMarket.Id,false).MarketDescription, newMarket.MarketDescription);
         }
 
         [Fact]
         public void CantGetMissingMarket()
         {
             MarketService.CreateMarket(new Market());
-            Assert.Null(MarketService.GetById(Guid.NewGuid().ToString()));
+            Assert.Null(MarketService.GetById(Guid.NewGuid().ToString(),false));
 
         }
 
@@ -134,7 +134,7 @@ namespace BettingEngineServerTests
             createdMarket.MarketDescription = "Updated Market Description";
             MarketService.UpdateMarket(createdMarket);
 
-            Assert.Equal("Updated Market Description",MarketService .GetById(createdMarket.Id).MarketDescription);
+            Assert.Equal("Updated Market Description",MarketService .GetById(createdMarket.Id,false).MarketDescription);
         }
 
         [Fact]

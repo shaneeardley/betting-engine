@@ -7,11 +7,13 @@ namespace BettingEngineServer.Services
     public class MarketService : IMarketService
     {
         
-        private ICrudRepository<Market> MarketRepository { get; set; }
-        
-        public MarketService(ICrudRepository<Market> marketRepository)
+        private IMarketRepository MarketRepository { get; set; }
+        private IBetService BetService { get; set; }
+
+        public MarketService(IMarketRepository marketRepository, IBetService betService)
         {
             MarketRepository = marketRepository;
+            BetService = betService;
         }
         
         public List<Market> GetAll()
@@ -19,9 +21,20 @@ namespace BettingEngineServer.Services
             return MarketRepository.GetAll();
         }
 
-        public Market GetById(string marketId)
+        public List<Market> GetByEventId(string eventId, bool populateBets)
         {
-            return MarketRepository.GetById(marketId);
+            List<Market> byEventId = MarketRepository.GetAllByEventId(eventId);
+            if (!populateBets) return byEventId;
+            byEventId.ForEach(market => { market.MarketBets = BetService.GetAllByMarketId(market.Id); });
+            return byEventId;
+        }
+
+        public Market GetById(string marketId, bool populateBets)
+        {
+            var marketById = MarketRepository.GetById(marketId);
+            if (!populateBets || marketById==null) return marketById;
+            marketById.MarketBets = BetService.GetAllByMarketId(marketId);
+            return marketById;
         }
 
         public Market UpdateMarket(Market existingMarket)

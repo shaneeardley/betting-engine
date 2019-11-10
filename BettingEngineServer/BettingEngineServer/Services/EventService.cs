@@ -7,21 +7,28 @@ namespace BettingEngineServer.Services
 {
     public class EventService : IEventService
     {
-        private ICrudRepository<Event> EventRepository { get; set; }
+        private IEventRepository EventRepository { get; set; }
+        private IMarketService MarketService { get; set; }
         
-        public EventService(ICrudRepository<Event> eventRepository)
+        public EventService(IEventRepository eventRepository, IMarketService marketService)
         {
-            this.EventRepository = eventRepository;
+            EventRepository = eventRepository;
+            MarketService = marketService;
         }
+
         
+
         public List<Event> GetAll()
         {
             return EventRepository.GetAll();
         }
 
-        public Event GetById(string eventId)
+        public Event GetById(string eventId, bool populateMarkets, bool populateMarketBets)
         {
-            return EventRepository.GetById(eventId);
+            var byIdEvent = EventRepository.GetById(eventId);
+            if (!populateMarkets || byIdEvent==null) return byIdEvent;
+            byIdEvent.EventMarkets = MarketService.GetByEventId(eventId, populateMarketBets);
+            return byIdEvent;
         }
 
         public Event UpdateEvent(Event existingEvent)

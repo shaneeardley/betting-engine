@@ -33,9 +33,9 @@ namespace BettingEngineServer
             services.AddScoped<IMarketService, MarketService>();
             services.AddScoped<IBetService, BetService>();
 
-            services.AddScoped<ICrudRepository<Event>, EventRepository>();
-            services.AddScoped<ICrudRepository<Market>, MarketRepository>();
-            services.AddScoped<ICrudRepository<Bet>, BetRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IMarketRepository, MarketRepository>();
+            services.AddScoped<IBetRepository, BetRepository>();
             services.AddControllers();
         }
 

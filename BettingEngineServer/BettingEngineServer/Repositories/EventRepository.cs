@@ -6,7 +6,7 @@ using BettingEngineServer.Interfaces;
 
 namespace BettingEngineServer.Repositories
 {
-    public class EventRepository : ICrudRepository<Event>
+    public class EventRepository : IEventRepository
     {
         public Dictionary<string,Event> CachedEvents { get; set; }
 
