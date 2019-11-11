@@ -9,8 +9,7 @@ as allowing bets to be placed and resulted.
 * [git](https://git-scm.com/downloads) Installed - To clone the code repository from github
 
 ### Server Specific
-* [.NET Core SDK](https://dotnet.microsoft.com/download) Installed - To build and execute the project OR
-* [.NET Core Runtime](https://dotnet.microsoft.com/download) Installed - To run pre-compiled binaries [(available here)]()
+* [.NET Core SDK](https://dotnet.microsoft.com/download) Installed - To build and execute the project
 ### Client Specific
 * [nodeJS](https://nodejs.org/en/download) Installed - Used to run NPM commands for the client
 * [Angular CLI](https://angular.io/cli) Installed - To build and execute the front end client. Simply run:
