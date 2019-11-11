@@ -16,10 +16,10 @@ namespace BettingEngineServerTests
         public MarketTests()
         {
             var betRepo = new BetRepository();
-            var betService = new BetService(betRepo);
             var marketRepo = new MarketRepository();
-            var marketService = new MarketService(marketRepo,betService);
             var eventRepo = new EventRepository();
+            var betService = new BetService(betRepo,eventRepo,marketRepo);
+            var marketService = new MarketService(marketRepo,betService);
             var eventService = new EventService(eventRepo,marketService);
             
             MarketController = new MarketController(marketService);
@@ -72,7 +72,9 @@ namespace BettingEngineServerTests
         [Fact]
         private void CanCalculateMarketProfitAndPayout()
         {
-            var newMarket = Common.CreateAndSaveMockMarket(Guid.NewGuid().ToString(), "Market 1",
+            var nEvent = Common.CreateAndSaveMockEvent(EventController);
+            
+            var newMarket = Common.CreateAndSaveMockMarket(nEvent.Id, "Market 1",
                 0.5m, MarketController);
 
             Common.CreateAndSaveMockBet(newMarket.Id, 100, BetController);

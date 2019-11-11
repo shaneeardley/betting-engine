@@ -1,9 +1,9 @@
 # Betting Engine - Shane Eardley
 
 ## Preface
-A new prototype sports betting engine is needed. This needs to cater for configuring Events and their Markets, as well
-as allowing bets to be placed and resulted. 
 
+A new prototype sports betting engine is needed. It should be able to allow for configuring Events and their Markets, 
+as well as allowing bets to be placed and resulted.
 
 ## Prerequisites 
 * [git](https://git-scm.com/downloads) Installed - To clone the code repository from github

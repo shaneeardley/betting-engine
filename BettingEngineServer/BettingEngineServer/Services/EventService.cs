@@ -49,16 +49,16 @@ namespace BettingEngineServer.Services
         {
             if (newEvent == null) throw new ArgumentNullException(nameof(newEvent));
             if (newEvent.StartDate == null || newEvent.StartDate == new DateTime())
-                throw new ValidationException("An event needs a starting date.");
+                throw new Exception("An event needs a starting date.");
             if (newEvent.EndDate == null || newEvent.EndDate == new DateTime())
-                throw new ValidationException("An event needs an end date.");
+                throw new Exception("An event needs an end date.");
             if(newEvent.EndDate < DateTime.Now)
-                throw new ValidationException("An event cannot be created once the event end date has passed.");
+                throw new Exception("An event cannot be created once the event end date has passed.");
             if (newEvent.StartDate > newEvent.EndDate)
-                throw new ValidationException("An event cannot end before it starts");
+                throw new Exception("An event cannot end before it starts.");
             
             if(string.IsNullOrEmpty(newEvent.EventDescription))
-                throw new ValidationException("An event requires a description in order to be created.");
+                throw new Exception("An event requires a description in order to be created.");
 
         }
 

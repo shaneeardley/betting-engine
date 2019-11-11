@@ -14,7 +14,10 @@ namespace BettingEngineServerTests
 
         public MarketControllerTests()
         {
-            this.MarketController = new MarketController(new MarketService(new MarketRepository(),new BetService(new BetRepository())));
+            var eventRepo = new EventRepository();
+            var marketRepo = new MarketRepository();
+            var betRepo = new BetRepository();
+            this.MarketController = new MarketController(new MarketService(marketRepo,new BetService(betRepo,eventRepo,marketRepo)));
         }
         
         [Fact]
@@ -82,7 +85,11 @@ namespace BettingEngineServerTests
 
         public MarketServiceTests()
         {
-            MarketService = new MarketService(new MarketRepository(),new BetService(new BetRepository()));
+            var eventRepo = new EventRepository();
+            var marketRepo = new MarketRepository();
+            var betRepo = new BetRepository();
+            
+            MarketService = new MarketService(marketRepo,new BetService(betRepo,eventRepo, marketRepo));
         }
         
         [Fact]

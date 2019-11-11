@@ -15,7 +15,15 @@ namespace BettingEngineServerTests
 
         public EventControllerTests()
         {
-            this.EventController = new EventController(new EventService(new EventRepository(),new MarketService(new MarketRepository(), new  BetService(new BetRepository()))));
+            
+            var eventRepo = new EventRepository();
+            var marketRepo = new MarketRepository();
+            var betRepo = new BetRepository();
+            
+            var betService = new BetService(betRepo,eventRepo,marketRepo);
+            var eventService = new EventService(eventRepo, new MarketService(marketRepo, betService));
+
+            EventController = new EventController(eventService);
         }
 
         
@@ -35,7 +43,16 @@ namespace BettingEngineServerTests
                 EndDate = DateTime.Now.AddDays(1),
                 EventDescription = "New Event Name"
             };
-            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+            var exceptionMessage = "";
+            try
+            {
+                EventController.Post(newEvent);
+            }
+            catch (Exception e)
+            {
+                exceptionMessage = e.Message;
+            }
+            Assert.Equal("An event needs a starting date.",exceptionMessage);
         }
 
         [Fact]
@@ -46,7 +63,16 @@ namespace BettingEngineServerTests
                 StartDate = DateTime.Now.AddDays(1),
                 EventDescription = "New Event Name"
             };
-            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+            var exceptionMessage = "";
+            try
+            {
+                EventController.Post(newEvent);
+            }
+            catch (Exception e)
+            {
+                exceptionMessage = e.Message;
+            }
+            Assert.Equal("An event needs an end date.",exceptionMessage);
         }
         
         [Fact]
@@ -58,7 +84,37 @@ namespace BettingEngineServerTests
                 StartDate = DateTime.Now,
                 EventDescription = "New Event Name"
             };
-            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+            var exceptionMessage = "";
+            try
+            {
+                EventController.Post(newEvent);
+            }
+            catch (Exception e)
+            {
+                exceptionMessage = e.Message;
+            }
+            Assert.Equal("An event cannot be created once the event end date has passed.",exceptionMessage);
+        }
+        
+        [Fact]
+        public void CantCreateEventWithEndDateAfterStartDate()
+        {
+            var newEvent = new Event()
+            {
+                EndDate = DateTime.Now.AddDays(2),
+                StartDate = DateTime.Now.AddDays(3),
+                EventDescription = "New Event Name"
+            };
+            var exceptionMessage = "";
+            try
+            {
+                EventController.Post(newEvent);
+            }
+            catch (Exception e)
+            {
+                exceptionMessage = e.Message;
+            }
+            Assert.Equal("An event cannot end before it starts.",exceptionMessage);
         }
         
         [Fact]
@@ -69,7 +125,16 @@ namespace BettingEngineServerTests
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(1)
             };
-            Assert.Throws<ValidationException>(() => EventController.Post(newEvent));
+            var exceptionMessage = "";
+            try
+            {
+                EventController.Post(newEvent);
+            }
+            catch (Exception e)
+            {
+                exceptionMessage = e.Message;
+            }
+            Assert.Equal("An event requires a description in order to be created.",exceptionMessage);
         }
         
         
@@ -140,7 +205,14 @@ namespace BettingEngineServerTests
 
         public EventServiceTests()
         {
-            EventService = new EventService(new EventRepository(), new MarketService(new MarketRepository(), new BetService(new BetRepository())));
+             
+            var eventRepo = new EventRepository();
+            var marketRepo = new MarketRepository();
+            var betRepo = new BetRepository();
+            
+            var betService = new BetService(betRepo,eventRepo,marketRepo);
+            EventService = new EventService(eventRepo, new MarketService(marketRepo, betService));
+
         }
         
         [Fact]

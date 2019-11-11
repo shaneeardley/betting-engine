@@ -16,10 +16,10 @@ namespace BettingEngineServerTests
         public EventTests()
         {
             var betRepo = new BetRepository();
-            var betService = new BetService(betRepo);
             var marketRepo = new MarketRepository();
-            var marketService = new MarketService(marketRepo,betService);
             var eventRepo = new EventRepository();
+            var betService = new BetService(betRepo,eventRepo,marketRepo);
+            var marketService = new MarketService(marketRepo,betService);
             var eventService = new EventService(eventRepo,marketService);
             
             MarketController = new MarketController(marketService);
@@ -42,8 +42,10 @@ namespace BettingEngineServerTests
         [Fact]
         private void CanInitialiseAndGetMarketWithBets()
         {
+            var nEvent = Common.CreateAndSaveMockEvent(EventController);
+            
             var nMarket = Common.CreateAndSaveMockMarket(
-                Guid.NewGuid().ToString(), "Market 1", 0.1m, MarketController);
+                nEvent.Id, "Market 1", 0.1m, MarketController);
             Common.CreateAndSaveMockBet(nMarket.Id, 1,BetController);
             Common.CreateAndSaveMockBet(nMarket.Id, 2,BetController);
             Common.CreateAndSaveMockBet(nMarket.Id, 3,BetController);
@@ -60,7 +62,7 @@ namespace BettingEngineServerTests
            var nMarket2=  Common.CreateAndSaveMockMarket(newEvent.Id, "Team 2 Wins", 0.6m,MarketController);
            var nMarket3=Common.CreateAndSaveMockMarket(newEvent.Id, "Draw", 0.1m, MarketController);
 
-           for (var i = 0; i < 3; i++)
+           for (var i = 1; i < 4; i++)
            {
                Common.CreateAndSaveMockBet(nMarket1.Id, i,BetController);
                Common.CreateAndSaveMockBet(nMarket2.Id, i,BetController);
