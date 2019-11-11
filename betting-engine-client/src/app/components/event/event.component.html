@@ -18,6 +18,7 @@
     <h6 *ngIf="!isNewEvent">{{selectedEvent.endDate}}</h6>
 
     <hr>
+    <h5  *ngIf="showErrorText" style="color: red">{{errorText}}</h5>
     <button  type="button" class="btn btn-secondary" (click)="back()">Back</button> 
     <button [disabled]="someFieldsMissing()" type="button" class="btn btn-primary" (click)="saveEvent()">Save Event</button> 
     <button  [disabled]="isNewEvent" type="button" class="btn btn-success" (click)="viewAllMarketOutcomes()">View Event Market Outcomes</button>

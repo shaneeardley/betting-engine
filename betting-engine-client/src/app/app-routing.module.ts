@@ -12,7 +12,8 @@ const routes: Routes = [
     {path: 'event/:eventId', component: EventComponent, pathMatch: 'full'},
     {path: 'event/profit-loss-report/:eventId', component: EventProfitLossReportComponent, pathMatch: 'full'},
     {path: 'event/:eventId/market/:marketId', component: MarketComponent, pathMatch: 'full'},
-    {path: 'event/:eventId/market/:marketId/bet/:betId', component: BetComponent, pathMatch: 'full'}
+    {path: 'event/:eventId/market/:marketId/bet/:betId', component: BetComponent, pathMatch: 'full'},
+    {path: '**', component: EventListComponent}
   ]
 ;
 
