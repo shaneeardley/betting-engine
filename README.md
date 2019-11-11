@@ -78,6 +78,7 @@ point to your server url, located int betting-engine-client/src/assets/config.js
 
 ## Assumptions
 * Bets can be placed once an event has started, but not after it has finished 
+* No items can be deleted once created
 
 ## Notes
 * The DB is not currently persisted outside of memory, but to convert to persisted storage, all that would need to be 
